@@ -24,13 +24,13 @@ create_project() {
     exit 1
   fi
 
-  project="attendance_tracker_${name}"
+  candidate="attendance_tracker_${name}"
 
-  if [ -d "$project" ]; then
-    read -r -p "$project already exists. Overwrite it? Type y or n: " answer
+  if [ -d "$candidate" ]; then
+    read -r -p "$candidate already exists. Overwrite it? Type y or n: " answer
     case "$answer" in
       y|Y)
-        rm -rf "$project"
+        rm -rf "$candidate"
         ;;
       *)
         echo "Stopped. The old folder was left as it is."
@@ -38,6 +38,8 @@ create_project() {
         ;;
     esac
   fi
+
+  project="$candidate"
 
   mkdir -p "$project/Helpers" "$project/reports"
   echo "Created $project"
@@ -47,7 +49,7 @@ create_project() {
 
 copy_program_files() {
   if [ ! -f templates/attendance_checker.py ] || [ ! -f templates/config.json ] || [ ! -f templates/assets.csv ]; then
-    echo "A teacher's file is missing from the templates folder."
+    echo "There is a file is missing from the templates folder."
     exit 1
   fi
 
